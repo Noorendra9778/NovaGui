@@ -1,6 +1,5 @@
 local NovaGui = {}
 
--- Function to create a window
 function NovaGui:CreateWindow(title)
     local Window = {}
     local ScreenGui = Instance.new("ScreenGui")
@@ -22,8 +21,8 @@ function NovaGui:CreateWindow(title)
     MainFrame.Name = "MainFrame"
     MainFrame.Parent = ScreenGui
     MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    MainFrame.Size = UDim2.new(0, 500, 0, 400)
-    MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
+    MainFrame.Size = UDim2.new(0, 400, 0, 300)
+    MainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
     MainFrame.Active = true
     MainFrame.Draggable = true
 
@@ -88,6 +87,8 @@ function NovaGui:CreateWindow(title)
     MinimizeButton.MouseButton1Click:Connect(function()
         minimized = not minimized
         Components.Visible = not minimized
+        TabHolder.Visible = not minimized
+        MainFrame.Size = minimized and UDim2.new(0, 400, 0, 30) or UDim2.new(0, 400, 0, 300)
     end)
 
     -- Close button functionality
@@ -143,6 +144,16 @@ function NovaGui:CreateWindow(title)
             Button.MouseButton1Click:Connect(function()
                 pcall(callback)
             end)
+        end
+
+        -- Function to add a slider
+        function Tab:AddSlider(sliderName, minValue, maxValue, callback)
+            -- Slider implementation...
+        end
+
+        -- Function to add text input
+        function Tab:AddTextInput(inputName, placeholderText, callback)
+            -- TextInput implementation...
         end
 
         return Tab
