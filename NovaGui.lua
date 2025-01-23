@@ -1,211 +1,227 @@
+-- NovaGui UI Library
 local NovaGui = {}
 
-function NovaGui:CreateWindow(title)
-    local Window = {}
+-- Main UI creation
+function NovaGui:CreateWindow(windowName)
+    local UI = {}
+    local dragging, dragInput, dragStart, startPos
+    local UIS = game:GetService("UserInputService")
+    
+    -- ScreenGui
     local ScreenGui = Instance.new("ScreenGui")
-    local MainFrame = Instance.new("Frame")
-    local TitleBar = Instance.new("TextLabel")
-    local MinimizeButton = Instance.new("TextButton")
-    local CloseButton = Instance.new("TextButton")
-    local TabHolder = Instance.new("Frame")
-    local TabContainer = Instance.new("Frame")
-    local Components = Instance.new("Frame")
-    local TabListLayout = Instance.new("UIListLayout")
-
-    -- ScreenGui setup
     ScreenGui.Name = "NovaGui"
-    ScreenGui.Parent = game:GetService("CoreGui")
-    ScreenGui.ResetOnSpawn = false
+    ScreenGui.Parent = game.CoreGui
 
-    -- MainFrame setup
+    -- MainFrame
+    local MainFrame = Instance.new("Frame")
     MainFrame.Name = "MainFrame"
     MainFrame.Parent = ScreenGui
     MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     MainFrame.Size = UDim2.new(0, 400, 0, 300)
     MainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
-    MainFrame.Active = true
-    MainFrame.Draggable = true
+    MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 
-    -- TitleBar setup
+    -- TitleBar
+    local TitleBar = Instance.new("Frame")
     TitleBar.Name = "TitleBar"
     TitleBar.Parent = MainFrame
-    TitleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    TitleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     TitleBar.Size = UDim2.new(1, 0, 0, 30)
-    TitleBar.Font = Enum.Font.SourceSansBold
-    TitleBar.Text = title
-    TitleBar.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TitleBar.TextSize = 20
 
-    -- MinimizeButton setup
+    -- TitleLabel
+    local TitleLabel = Instance.new("TextLabel")
+    TitleLabel.Name = "TitleLabel"
+    TitleLabel.Parent = TitleBar
+    TitleLabel.Text = windowName
+    TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TitleLabel.TextSize = 14
+    TitleLabel.BackgroundTransparency = 1
+    TitleLabel.Size = UDim2.new(1, 0, 1, 0)
+
+    -- MinimizeButton
+    local MinimizeButton = Instance.new("TextButton")
     MinimizeButton.Name = "MinimizeButton"
     MinimizeButton.Parent = TitleBar
-    MinimizeButton.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
-    MinimizeButton.Position = UDim2.new(0.85, 0, 0, 0)
-    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
-    MinimizeButton.Text = "-"
+    MinimizeButton.Text = "_"
     MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    MinimizeButton.Font = Enum.Font.SourceSansBold
-    MinimizeButton.TextSize = 20
+    MinimizeButton.TextSize = 14
+    MinimizeButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+    MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
+    MinimizeButton.AnchorPoint = Vector2.new(1, 0)
 
-    -- CloseButton setup
-    CloseButton.Name = "CloseButton"
-    CloseButton.Parent = TitleBar
-    CloseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-    CloseButton.Position = UDim2.new(0.9, 0, 0, 0)
-    CloseButton.Size = UDim2.new(0, 30, 0, 30)
-    CloseButton.Text = "X"
-    CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    CloseButton.Font = Enum.Font.SourceSansBold
-    CloseButton.TextSize = 20
+    -- DestroyButton
+    local DestroyButton = Instance.new("TextButton")
+    DestroyButton.Name = "DestroyButton"
+    DestroyButton.Parent = TitleBar
+    DestroyButton.Text = "X"
+    DestroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    DestroyButton.TextSize = 14
+    DestroyButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    DestroyButton.Size = UDim2.new(0, 30, 0, 30)
+    DestroyButton.Position = UDim2.new(1, -30, 0, 0)
+    DestroyButton.AnchorPoint = Vector2.new(1, 0)
 
-    -- TabHolder setup
-    TabHolder.Name = "TabHolder"
-    TabHolder.Parent = MainFrame
-    TabHolder.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    TabHolder.Size = UDim2.new(0, 100, 1, -30)
-    TabHolder.Position = UDim2.new(0, 0, 0, 30)
+    -- TabsFrame
+    local TabsFrame = Instance.new("Frame")
+    TabsFrame.Name = "TabsFrame"
+    TabsFrame.Parent = MainFrame
+    TabsFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    TabsFrame.Size = UDim2.new(0, 100, 1, -30)
+    TabsFrame.Position = UDim2.new(0, 0, 0, 30)
 
-    -- TabContainer setup
-    TabContainer.Name = "TabContainer"
-    TabContainer.Parent = TabHolder
-    TabContainer.BackgroundTransparency = 1
-    TabContainer.Size = UDim2.new(1, 0, 1, 0)
+    -- TabContent
+    local TabContent = Instance.new("Frame")
+    TabContent.Name = "TabContent"
+    TabContent.Parent = MainFrame
+    TabContent.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    TabContent.Size = UDim2.new(1, -100, 1, -30)
+    TabContent.Position = UDim2.new(0, 100, 0, 30)
 
-    -- TabListLayout setup
-    TabListLayout.Parent = TabContainer
-    TabListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    -- Dragging functionality
+    TitleBar.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = MainFrame.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
 
-    -- Components setup
-    Components.Name = "Components"
-    Components.Parent = MainFrame
-    Components.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    Components.Size = UDim2.new(1, -100, 1, -30)
-    Components.Position = UDim2.new(0, 100, 0, 30)
+    TitleBar.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
 
-    -- Minimize button functionality
+    UIS.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+
+    -- Minimize functionality
     local minimized = false
     MinimizeButton.MouseButton1Click:Connect(function()
         minimized = not minimized
-        Components.Visible = not minimized
-        TabHolder.Visible = not minimized
-        MainFrame.Size = minimized and UDim2.new(0, 400, 0, 30) or UDim2.new(0, 400, 0, 300)
-    end)
-
-    -- Close button functionality
-    CloseButton.MouseButton1Click:Connect(function()
-        ScreenGui:Destroy()
-    end)
-
-    -- Function to add a tab
-    function Window:AddTab(tabName)
-        local Tab = {}
-        local TabButton = Instance.new("TextButton")
-        local TabContent = Instance.new("Frame")
-
-        -- TabButton setup
-        TabButton.Name = tabName .. "Button"
-        TabButton.Parent = TabContainer
-        TabButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-        TabButton.Size = UDim2.new(1, 0, 0, 30)
-        TabButton.Font = Enum.Font.SourceSansBold
-        TabButton.Text = tabName
-        TabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-        TabButton.TextSize = 18
-
-        -- TabContent setup
-        TabContent.Name = tabName .. "Content"
-        TabContent.Parent = Components
-        TabContent.BackgroundTransparency = 1
-        TabContent.Size = UDim2.new(1, 0, 1, 0)
-        TabContent.Visible = false
-
-        TabButton.MouseButton1Click:Connect(function()
-            for _, v in pairs(Components:GetChildren()) do
-                if v:IsA("Frame") then
+        if minimized then
+            for _, v in pairs(MainFrame:GetChildren()) do
+                if v ~= TitleBar then
                     v.Visible = false
                 end
             end
-            TabContent.Visible = true
+            MainFrame.Size = UDim2.new(0, 400, 0, 30)
+        else
+            for _, v in pairs(MainFrame:GetChildren()) do
+                v.Visible = true
+            end
+            MainFrame.Size = UDim2.new(0, 400, 0, 300)
+        end
+    end)
+
+    -- Destroy functionality
+    DestroyButton.MouseButton1Click:Connect(function()
+        ScreenGui:Destroy()
+    end)
+
+    -- AddTab function
+    function UI:AddTab(tabName)
+        local Tab = {}
+        
+        -- TabButton
+        local TabButton = Instance.new("TextButton")
+        TabButton.Name = tabName .. "Button"
+        TabButton.Parent = TabsFrame
+        TabButton.Text = tabName
+        TabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        TabButton.TextSize = 14
+        TabButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        TabButton.Size = UDim2.new(1, 0, 0, 30)
+        
+        -- TabContentFrame
+        local TabContentFrame = Instance.new("Frame")
+        TabContentFrame.Name = tabName .. "Content"
+        TabContentFrame.Parent = TabContent
+        TabContentFrame.BackgroundTransparency = 1
+        TabContentFrame.Size = UDim2.new(1, 0, 1, 0)
+        TabContentFrame.Visible = false
+
+        TabButton.MouseButton1Click:Connect(function()
+            for _, v in pairs(TabContent:GetChildren()) do
+                v.Visible = false
+            end
+            TabContentFrame.Visible = true
         end)
 
-        -- Function to add a button
-        function Tab:AddButton(buttonName, callback)
+        -- AddButton function
+        function Tab:AddButton(buttonText, callback)
             local Button = Instance.new("TextButton")
-
-            Button.Name = buttonName
-            Button.Parent = TabContent
-            Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-            Button.Size = UDim2.new(0, 200, 0, 40)
-            Button.Font = Enum.Font.SourceSansBold
-            Button.Text = buttonName
+            Button.Name = buttonText .. "Button"
+            Button.Parent = TabContentFrame
+            Button.Text = buttonText
             Button.TextColor3 = Color3.fromRGB(255, 255, 255)
-            Button.TextSize = 18
-
-            Button.MouseButton1Click:Connect(function()
-                pcall(callback)
-            end)
+            Button.TextSize = 14
+            Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+            Button.Size = UDim2.new(0, 200, 0, 30)
+            Button.MouseButton1Click:Connect(callback)
         end
 
-        -- Function to add a slider
+        -- AddSlider function
         function Tab:AddSlider(sliderName, minValue, maxValue, callback)
             local SliderFrame = Instance.new("Frame")
-            local SliderBar = Instance.new("Frame")
-            local SliderButton = Instance.new("TextButton")
-            local SliderValue = Instance.new("TextLabel")
-
-            -- SliderFrame setup
             SliderFrame.Name = sliderName .. "Slider"
-            SliderFrame.Parent = TabContent
+            SliderFrame.Parent = TabContentFrame
             SliderFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-            SliderFrame.Size = UDim2.new(0, 300, 0, 50)
-            -- SliderBar setup
+            SliderFrame.Size = UDim2.new(0, 200, 0, 50)
+            
+            local SliderBar = Instance.new("Frame")
             SliderBar.Name = "SliderBar"
             SliderBar.Parent = SliderFrame
-            SliderBar.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-            SliderBar.Size = UDim2.new(0.9, 0, 0.2, 0)
-            SliderBar.Position = UDim2.new(0.05, 0, 0.5, -5)
+            SliderBar.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+            SliderBar.Size = UDim2.new(0, 180, 0, 10)
+            SliderBar.Position = UDim2.new(0, 10, 0.5, -5)
 
-            -- SliderButton setup
+            local SliderButton = Instance.new("Frame")
             SliderButton.Name = "SliderButton"
             SliderButton.Parent = SliderBar
-            SliderButton.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
-            SliderButton.Size = UDim2.new(0, 10, 1, 0)
+            SliderButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+            SliderButton.Size = UDim2.new(0, 20, 1, 0)
 
-            -- SliderValue setup
-            SliderValue.Name = "SliderValue"
-            SliderValue.Parent = SliderFrame
-            SliderValue.BackgroundTransparency = 1
-            SliderValue.Position = UDim2.new(0.85, 0, 0.1, 0)
-            SliderValue.Size = UDim2.new(0, 40, 0, 20)
-            SliderValue.Font = Enum.Font.SourceSans
-            SliderValue.Text = tostring(minValue)
-            SliderValue.TextColor3 = Color3.fromRGB(255, 255, 255)
-            SliderValue.TextSize = 14
+            local ValueLabel = Instance.new("TextLabel")
+            ValueLabel.Name = "ValueLabel"
+            ValueLabel.Parent = SliderFrame
+            ValueLabel.Text = tostring(minValue)
+            ValueLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            ValueLabel.BackgroundTransparency = 1
+            ValueLabel.Size = UDim2.new(1, 0, 0, 20)
+            ValueLabel.Position = UDim2.new(0, 0, 0, 0)
 
-            -- Slider functionality
             local dragging = false
-            SliderButton.MouseButton1Down:Connect(function()
-                dragging = true
+
+            SliderButton.InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                    dragging = true
+                end
             end)
 
-            game:GetService("UserInputService").InputEnded:Connect(function(input)
-                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            SliderButton.InputEnded:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
                     dragging = false
                 end
             end)
 
-            SliderBar.InputChanged:Connect(function(input)
-                if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-                    local mousePos = game:GetService("UserInputService"):GetMouseLocation().X
-                    local sliderStart = SliderBar.AbsolutePosition.X
-                    local sliderEnd = sliderStart + SliderBar.AbsoluteSize.X
-                    local newPos = math.clamp(mousePos, sliderStart, sliderEnd)
-                    local percentage = (newPos - sliderStart) / SliderBar.AbsoluteSize.X
-                    local value = math.floor(minValue + (maxValue - minValue) * percentage)
-
-                    SliderButton.Position = UDim2.new(percentage, -5, 0, 0)
-                    SliderValue.Text = tostring(value)
-
+            game:GetService("UserInputService").InputChanged:Connect(function(input)
+                if dragging and input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                    local scale = math.clamp((input.Position.X - SliderBar.AbsolutePosition.X) / SliderBar.AbsoluteSize.X, 0, 1)
+                    SliderButton.Position = UDim2.new(scale, -10, 0, 0)
+                    local value = math.floor(scale * (maxValue - minValue) + minValue)
+                    ValueLabel.Text = tostring(value)
                     if callback then
                         callback(value)
                     end
@@ -213,41 +229,10 @@ function NovaGui:CreateWindow(title)
             end)
         end
 
-        -- Function to add text input
-        function Tab:AddTextInput(inputName, placeholderText, callback)
-            local TextBoxFrame = Instance.new("Frame")
-            local TextBox = Instance.new("TextBox")
-
-            -- TextBoxFrame setup
-            TextBoxFrame.Name = inputName .. "Frame"
-            TextBoxFrame.Parent = TabContent
-            TextBoxFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-            TextBoxFrame.Size = UDim2.new(0, 300, 0, 50)
-
-            -- TextBox setup
-            TextBox.Name = inputName
-            TextBox.Parent = TextBoxFrame
-            TextBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-            TextBox.Position = UDim2.new(0.05, 0, 0.2, 0)
-            TextBox.Size = UDim2.new(0.9, 0, 0.6, 0)
-            TextBox.Font = Enum.Font.SourceSans
-            TextBox.PlaceholderText = placeholderText
-            TextBox.Text = ""
-            TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-            TextBox.TextSize = 18
-
-            -- TextBox functionality
-            TextBox.FocusLost:Connect(function(enterPressed)
-                if enterPressed and callback then
-                    callback(TextBox.Text)
-                end
-            end)
-        end
-
         return Tab
     end
 
-    return Window
+    return UI
 end
 
 return NovaGui
