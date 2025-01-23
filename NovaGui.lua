@@ -148,12 +148,100 @@ function NovaGui:CreateWindow(title)
 
         -- Function to add a slider
         function Tab:AddSlider(sliderName, minValue, maxValue, callback)
-            -- Slider implementation...
+            local SliderFrame = Instance.new("Frame")
+            local SliderBar = Instance.new("Frame")
+            local SliderButton = Instance.new("TextButton")
+            local SliderValue = Instance.new("TextLabel")
+
+            -- SliderFrame setup
+            SliderFrame.Name = sliderName .. "Slider"
+            SliderFrame.Parent = TabContent
+            SliderFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+            SliderFrame.Size = UDim2.new(0, 300, 0, 50)
+            -- SliderBar setup
+            SliderBar.Name = "SliderBar"
+            SliderBar.Parent = SliderFrame
+            SliderBar.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+            SliderBar.Size = UDim2.new(0.9, 0, 0.2, 0)
+            SliderBar.Position = UDim2.new(0.05, 0, 0.5, -5)
+
+            -- SliderButton setup
+            SliderButton.Name = "SliderButton"
+            SliderButton.Parent = SliderBar
+            SliderButton.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+            SliderButton.Size = UDim2.new(0, 10, 1, 0)
+
+            -- SliderValue setup
+            SliderValue.Name = "SliderValue"
+            SliderValue.Parent = SliderFrame
+            SliderValue.BackgroundTransparency = 1
+            SliderValue.Position = UDim2.new(0.85, 0, 0.1, 0)
+            SliderValue.Size = UDim2.new(0, 40, 0, 20)
+            SliderValue.Font = Enum.Font.SourceSans
+            SliderValue.Text = tostring(minValue)
+            SliderValue.TextColor3 = Color3.fromRGB(255, 255, 255)
+            SliderValue.TextSize = 14
+
+            -- Slider functionality
+            local dragging = false
+            SliderButton.MouseButton1Down:Connect(function()
+                dragging = true
+            end)
+
+            game:GetService("UserInputService").InputEnded:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    dragging = false
+                end
+            end)
+
+            SliderBar.InputChanged:Connect(function(input)
+                if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+                    local mousePos = game:GetService("UserInputService"):GetMouseLocation().X
+                    local sliderStart = SliderBar.AbsolutePosition.X
+                    local sliderEnd = sliderStart + SliderBar.AbsoluteSize.X
+                    local newPos = math.clamp(mousePos, sliderStart, sliderEnd)
+                    local percentage = (newPos - sliderStart) / SliderBar.AbsoluteSize.X
+                    local value = math.floor(minValue + (maxValue - minValue) * percentage)
+
+                    SliderButton.Position = UDim2.new(percentage, -5, 0, 0)
+                    SliderValue.Text = tostring(value)
+
+                    if callback then
+                        callback(value)
+                    end
+                end
+            end)
         end
 
         -- Function to add text input
         function Tab:AddTextInput(inputName, placeholderText, callback)
-            -- TextInput implementation...
+            local TextBoxFrame = Instance.new("Frame")
+            local TextBox = Instance.new("TextBox")
+
+            -- TextBoxFrame setup
+            TextBoxFrame.Name = inputName .. "Frame"
+            TextBoxFrame.Parent = TabContent
+            TextBoxFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+            TextBoxFrame.Size = UDim2.new(0, 300, 0, 50)
+
+            -- TextBox setup
+            TextBox.Name = inputName
+            TextBox.Parent = TextBoxFrame
+            TextBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+            TextBox.Position = UDim2.new(0.05, 0, 0.2, 0)
+            TextBox.Size = UDim2.new(0.9, 0, 0.6, 0)
+            TextBox.Font = Enum.Font.SourceSans
+            TextBox.PlaceholderText = placeholderText
+            TextBox.Text = ""
+            TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+            TextBox.TextSize = 18
+
+            -- TextBox functionality
+            TextBox.FocusLost:Connect(function(enterPressed)
+                if enterPressed and callback then
+                    callback(TextBox.Text)
+                end
+            end)
         end
 
         return Tab
