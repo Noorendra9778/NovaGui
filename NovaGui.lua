@@ -1,169 +1,154 @@
-local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-function qdNYwSVnIDMkUwGVu(data) m=string.sub(data, 0, 55) data=data:gsub(m,'')
-
-data = string.gsub(data, '[^'..b..'=]', '') return (data:gsub('.', function(x) if (x == '=') then return '' end local r,f='',(b:find(x)-1) for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end return r; end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x) if (#x ~= 8) then return '' end local c=0 for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end return string.char(c) end)) end
-
-
- 
-
-
-function XVCBKBibuHfvnaHMGBpDvWFlbGNNqLHLjxdFzhtdBbDThYefJmkVTjGrhWveUZKvsGvmkQGozFDkejzVKqTrRMAFvqAgPQPU(c)
-tab={}
-for i = 1,#c do
-x=string.len(c[i]) 
-y=string.char(x)
-table.insert(tab,y)
-end
-x=table.concat(tab)
-return x
-end 
-
-
-function FWYhwbWiRljqYWkRQhhjnfMTGEsLbeNZNtnuEyCAxaIvzTznCCIQIZfOOaLD(code)res=XVCBKBibuHfvnaHMGBpDvWFlbGNNqLHLjxdFzhtdBbDThYefJmkVTjGrhWveUZKvsGvmkQGozFDkejzVKqTrRMAFvqAgPQPU({})for i in ipairs(code)do res=res..string.char(code[i]/105)end return res end 
-
-
-function TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf(code)res=FWYhwbWiRljqYWkRQhhjnfMTGEsLbeNZNtnuEyCAxaIvzTznCCIQIZfOOaLD({})for i in ipairs(code)do res=res..string.char(code[i]/105)end return res end 
-
-
--- NovaGui Library
--- A lightweight UI library for Roblox
-
 local NovaGui = {}
 
--- Create Window
+-- Function to create a window
 function NovaGui:CreateWindow(title)
-    local ScreenGui = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8715,10395,11970,10605,10605,11550,7455,12285,11025}))
-    local MainFrame = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({7350,11970,10185,11445,10605}))
-    local TopBar = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({7350,11970,10185,11445,10605}))
-    local Title = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8820,10605,12600,12180,7980,10185,10290,10605,11340}))
-    local MinimizeButton = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8820,10605,12600,12180,6930,12285,12180,12180,11655,11550}))
-    local CloseButton = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8820,10605,12600,12180,6930,12285,12180,12180,11655,11550}))
-    local TabsFrame = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({7350,11970,10185,11445,10605}))
-    local ContentFrame = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({7350,11970,10185,11445,10605}))
-    local UICorner = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8925,7665,7035,11655,11970,11550,10605,11970}))
+    local Window = {}
+    local ScreenGui = Instance.new("ScreenGui")
+    local MainFrame = Instance.new("Frame")
+    local TitleBar = Instance.new("TextLabel")
+    local MinimizeButton = Instance.new("TextButton")
+    local CloseButton = Instance.new("TextButton")
+    local TabHolder = Instance.new("Frame")
+    local TabContainer = Instance.new("Frame")
+    local Components = Instance.new("Frame")
+    local TabListLayout = Instance.new("UIListLayout")
 
-    -- Set Properties
-    ScreenGui.Parent = game:GetService(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8400,11340,10185,12705,10605,11970,12075})).LocalPlayer:WaitForChild(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8400,11340,10185,12705,10605,11970,7455,12285,11025}))
-    ScreenGui.Name = TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8190,11655,12390,10185,7455,12285,11025})
+    -- ScreenGui setup
+    ScreenGui.Name = "NovaGui"
+    ScreenGui.Parent = game:GetService("CoreGui")
+    ScreenGui.ResetOnSpawn = false
 
+    -- MainFrame setup
+    MainFrame.Name = "MainFrame"
     MainFrame.Parent = ScreenGui
-    MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    MainFrame.Size = UDim2.new(0, 600, 0, 400)
-    MainFrame.Position = UDim2.new(0.5, -300, 0.5, -200)
-    MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-    MainFrame.Draggable = true
+    MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    MainFrame.Size = UDim2.new(0, 500, 0, 400)
+    MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
     MainFrame.Active = true
-    MainFrame.Selectable = true
+    MainFrame.Draggable = true
 
-    TopBar.Parent = MainFrame
-    TopBar.Size = UDim2.new(1, 0, 0, 30)
-    TopBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    -- TitleBar setup
+    TitleBar.Name = "TitleBar"
+    TitleBar.Parent = MainFrame
+    TitleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    TitleBar.Size = UDim2.new(1, 0, 0, 30)
+    TitleBar.Font = Enum.Font.SourceSansBold
+    TitleBar.Text = title
+    TitleBar.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TitleBar.TextSize = 20
 
-    Title.Parent = TopBar
-    Title.Size = UDim2.new(1, -60, 1, 0)
-    Title.Position = UDim2.new(0, 10, 0, 0)
-    Title.Text = title or TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8190,11655,12390,10185,7455,12285,11025})
-    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Title.TextSize = 20
-    Title.Font = Enum.Font.SourceSans
-    Title.TextXAlignment = Enum.TextXAlignment.Left
-    Title.BackgroundTransparency = 1
-
-    MinimizeButton.Parent = TopBar
-    MinimizeButton.Size = UDim2.new(0, 30, 1, 0)
-    MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
-    MinimizeButton.Text = TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({4725})
-    MinimizeButton.Font = Enum.Font.SourceSans
-    MinimizeButton.TextSize = 20
-    MinimizeButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    -- MinimizeButton setup
+    MinimizeButton.Name = "MinimizeButton"
+    MinimizeButton.Parent = TitleBar
+    MinimizeButton.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+    MinimizeButton.Position = UDim2.new(0.85, 0, 0, 0)
+    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+    MinimizeButton.Text = "-"
     MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    MinimizeButton.Font = Enum.Font.SourceSansBold
+    MinimizeButton.TextSize = 20
 
-    CloseButton.Parent = TopBar
-    CloseButton.Size = UDim2.new(0, 30, 1, 0)
-    CloseButton.Position = UDim2.new(1, -30, 0, 0)
-    CloseButton.Text = TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({9240})
-    CloseButton.Font = Enum.Font.SourceSans
-    CloseButton.TextSize = 20
-    CloseButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    -- CloseButton setup
+    CloseButton.Name = "CloseButton"
+    CloseButton.Parent = TitleBar
+    CloseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    CloseButton.Position = UDim2.new(0.9, 0, 0, 0)
+    CloseButton.Size = UDim2.new(0, 30, 0, 30)
+    CloseButton.Text = "X"
     CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CloseButton.Font = Enum.Font.SourceSansBold
+    CloseButton.TextSize = 20
 
-    TabsFrame.Parent = MainFrame
-    TabsFrame.Size = UDim2.new(0, 150, 1, -30)
-    TabsFrame.Position = UDim2.new(0, 0, 0, 30)
-    TabsFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    -- TabHolder setup
+    TabHolder.Name = "TabHolder"
+    TabHolder.Parent = MainFrame
+    TabHolder.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    TabHolder.Size = UDim2.new(0, 100, 1, -30)
+    TabHolder.Position = UDim2.new(0, 0, 0, 30)
 
-    ContentFrame.Parent = MainFrame
-    ContentFrame.Size = UDim2.new(1, -150, 1, -30)
-    ContentFrame.Position = UDim2.new(0, 150, 0, 30)
-    ContentFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    -- TabContainer setup
+    TabContainer.Name = "TabContainer"
+    TabContainer.Parent = TabHolder
+    TabContainer.BackgroundTransparency = 1
+    TabContainer.Size = UDim2.new(1, 0, 1, 0)
 
-    UICorner.Parent = MainFrame
-    UICorner.CornerRadius = UDim.new(0, 5)
+    -- TabListLayout setup
+    TabListLayout.Parent = TabContainer
+    TabListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
-    -- Minimize Functionality
-    local isMinimized = false
+    -- Components setup
+    Components.Name = "Components"
+    Components.Parent = MainFrame
+    Components.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    Components.Size = UDim2.new(1, -100, 1, -30)
+    Components.Position = UDim2.new(0, 100, 0, 30)
+
+    -- Minimize button functionality
+    local minimized = false
     MinimizeButton.MouseButton1Click:Connect(function()
-        isMinimized = not isMinimized
-        if isMinimized then
-            ContentFrame.Visible = false
-            MainFrame.Size = UDim2.new(0, 600, 0, 30)
-        else
-            ContentFrame.Visible = true
-            MainFrame.Size = UDim2.new(0, 600, 0, 400)
-        end
+        minimized = not minimized
+        Components.Visible = not minimized
     end)
 
-    -- Close Functionality
+    -- Close button functionality
     CloseButton.MouseButton1Click:Connect(function()
         ScreenGui:Destroy()
     end)
 
-    -- API for adding tabs
-    local Window = {
-        Tabs = {},
-        AddTab = function(self, tabName)
-            local TabButton = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8820,10605,12600,12180,6930,12285,12180,12180,11655,11550}))
-            local TabContent = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({7350,11970,10185,11445,10605}))
+    -- Function to add a tab
+    function Window:AddTab(tabName)
+        local Tab = {}
+        local TabButton = Instance.new("TextButton")
+        local TabContent = Instance.new("Frame")
 
-            TabButton.Parent = TabsFrame
-            TabButton.Size = UDim2.new(1, 0, 0, 40)
-            TabButton.Text = tabName
-            TabButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-            TabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            TabButton.Font = Enum.Font.SourceSans
-            TabButton.TextSize = 18
+        -- TabButton setup
+        TabButton.Name = tabName .. "Button"
+        TabButton.Parent = TabContainer
+        TabButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        TabButton.Size = UDim2.new(1, 0, 0, 30)
+        TabButton.Font = Enum.Font.SourceSansBold
+        TabButton.Text = tabName
+        TabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        TabButton.TextSize = 18
 
-            TabContent.Parent = ContentFrame
-            TabContent.Size = UDim2.new(1, 0, 1, 0)
-            TabContent.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-            TabContent.Visible = false
+        -- TabContent setup
+        TabContent.Name = tabName .. "Content"
+        TabContent.Parent = Components
+        TabContent.BackgroundTransparency = 1
+        TabContent.Size = UDim2.new(1, 0, 1, 0)
+        TabContent.Visible = false
 
-            table.insert(self.Tabs, { Button = TabButton, Content = TabContent })
-
-            TabButton.MouseButton1Click:Connect(function()
-                for _, tab in pairs(self.Tabs) do
-                    tab.Content.Visible = false
+        TabButton.MouseButton1Click:Connect(function()
+            for _, v in pairs(Components:GetChildren()) do
+                if v:IsA("Frame") then
+                    v.Visible = false
                 end
-                TabContent.Visible = true
-            end)
+            end
+            TabContent.Visible = true
+        end)
 
-            return {
-                AddButton = function(_, text, callback)
-                    local Button = Instance.new(TZLNAZSJBwNOiMWiLPRmKlDbblCZcJLlXqeFrIECeldmDpf({8820,10605,12600,12180,6930,12285,12180,12180,11655,11550}))
-                    Button.Parent = TabContent
-                    Button.Size = UDim2.new(0, 200, 0, 50)
-                    Button.Text = text
-                    Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-                    Button.TextColor3 = Color3.fromRGB(255, 255, 255)
-                    Button.Font = Enum.Font.SourceSans
-                    Button.TextSize = 20
-                    Button.MouseButton1Click:Connect(callback)
-                end,
-            }
-        end,
-    }
+        -- Function to add a button
+        function Tab:AddButton(buttonName, callback)
+            local Button = Instance.new("TextButton")
+
+            Button.Name = buttonName
+            Button.Parent = TabContent
+            Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+            Button.Size = UDim2.new(0, 200, 0, 40)
+            Button.Font = Enum.Font.SourceSansBold
+            Button.Text = buttonName
+            Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+            Button.TextSize = 18
+
+            Button.MouseButton1Click:Connect(function()
+                pcall(callback)
+            end)
+        end
+
+        return Tab
+    end
 
     return Window
 end
 
-return NovaGui                
+return NovaGui
