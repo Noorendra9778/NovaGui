@@ -2,16 +2,16 @@
 
 ---
 
-NovaGui Library
+# NovaGui Library
 
 This documentation is for the stable release of NovaGui Library.
 
-Booting the Library
+# Booting the Library
 
 ```lua
 local NovaGui = loadstring(game:HttpGet(('https://raw.githubusercontent.com/Noorendra9778/NovaGui/main/NovaGui.lua')))()
 ```
-#Creating a Window
+# Creating a Window
 
 local Window = NovaGui:MakeWindow({Name = "Title of the library", HidePremium = false, SaveConfig = true, ConfigFolder = "NovaGuiTest"})
 
@@ -27,7 +27,7 @@ Icon = <string> - URL to the image you want displayed on the window.
 CloseCallback = <function> - Function to execute when the window is closed.
 ]]
 
-Creating a Tab
+# Creating a Tab
 
 local Tab = Window:MakeTab({
 	Name = "Tab 1",
@@ -41,7 +41,7 @@ Icon = <string> - The icon of the tab.
 PremiumOnly = <bool> - Makes the tab accessible to NovaGui Premium users only.
 ]]
 
-Creating a Section
+# Creating a Section
 
 local Section = Tab:AddSection({
 	Name = "Section"
@@ -51,7 +51,7 @@ local Section = Tab:AddSection({
 Name = <string> - The name of the section.
 ]]
 
-Notifying the user
+# Notifying the user
 
 NovaGui:MakeNotification({
 	Name = "Title!",
