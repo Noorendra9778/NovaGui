@@ -1,4 +1,3 @@
--- NovaGui Library with Simplified Styling for Mobile
 local NovaGui = {}
 
 function NovaGui:CreateWindow(Title)
@@ -111,7 +110,7 @@ function NovaGui:CreateWindow(Title)
         TabButton.Parent = TabContainer
         TabButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
         TabButton.Size = UDim2.new(0.9, 0, 0, 25)
-        TabButton.Position = UDim2.new(0.05, 0, (#TabContainer:GetChildren() - 1) * 30, 0)
+        TabButton.Position = UDim2.new(0.05, 0, (#TabContainer:GetChildren() - 1) * 0.25, 0) -- Proper button spacing
         TabButton.Font = Enum.Font.GothamBold
         TabButton.Text = Name
         TabButton.TextColor3 = Color3.fromRGB(255, 0, 0) -- Red text
@@ -126,9 +125,11 @@ function NovaGui:CreateWindow(Title)
         Tab.Visible = false
 
         TabButton.MouseButton1Click:Connect(function()
+            -- Hide all other tabs
             for _, child in pairs(ContentContainer:GetChildren()) do
                 child.Visible = false
             end
+            -- Show the selected tab
             Tab.Visible = true
         end)
 
