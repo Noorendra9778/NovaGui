@@ -2,11 +2,11 @@
 
 ---
 
-#NovaGui Library
+NovaGui Library
 
 This documentation is for the stable release of NovaGui Library.
 
-#Booting the Library
+Booting the Library
 
 ```lua
 local NovaGui = loadstring(game:HttpGet(('https://raw.githubusercontent.com/Noorendra9778/NovaGui/main/NovaGui.lua')))()
