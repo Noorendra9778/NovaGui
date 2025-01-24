@@ -82,6 +82,30 @@ function NovaGui:CreateWindow(Title)
     ContentCorner.CornerRadius = UDim.new(0, 8)
     ContentCorner.Parent = ContentContainer
 
+    -- Draggable Window Logic
+    local dragging = false
+    local dragInput, dragStart, startPos
+    TitleBar.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = true
+            dragStart = input.Position
+            startPos = MainFrame.Position
+        end
+    end)
+
+    TitleBar.InputChanged:Connect(function(input)
+        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+            local delta = input.Position - dragStart
+            MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+
+    TitleBar.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = false
+        end
+    end)
+
     -- Minimize Logic
     local minimized = false
     MinimizeButton.MouseButton1Click:Connect(function()
