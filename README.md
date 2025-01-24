@@ -1,179 +1,250 @@
-GitHub Description for NovaGui Library
-
-
----
-
-NovaGui - A Simple and User-Friendly UI Library for Roblox
-
-NovaGui is a lightweight and easy-to-use UI library for Roblox, designed to be intuitive for developers and players alike. With NovaGui, you can create customizable, draggable, and responsive interfaces on both PC and mobile devices. NovaGui includes features such as tabs, buttons, sliders, text inputs, and more, all while keeping your workflow simple and efficient.
-
+# NovaGui Library
+This documentation is for the stable release of NovaGui Library.
 
 ---
 
-Features
-
-Draggable windows (supports PC and mobile).
-
-Built-in minimize and destroy buttons.
-
-Easy-to-add tabs, buttons, sliders, and text inputs.
-
-Customizable and responsive design.
-
-Lightweight and optimized for performance.
-
-
-
----
-
-How to Use
-
-1. Copy the library script to your Roblox game or fetch it directly from the raw link below.
-
-
-2. Use the provided API to create windows, tabs, and components.
-
-
-3. Add functionality using simple callback functions.
-
-
-
-
----
-
-Setup
-
-To get started, include the NovaGui library in your
-
-script:
-
-local NovaGui = loadstring(game:HttpGet("https://raw.githubusercontent.com/Noorendra9778/NovaGui/main/NovaGui.lua"))()
+## Booting the Library
+```lua
+local NovaGui = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 
 ---
 
 Creating a Window
 
-To create a new UI window:
+local Window = NovaGui:MakeWindow({Name = "Title of the library", HidePremium = false, SaveConfig = true, ConfigFolder = "NovaGuiTest"})
 
-local Window = NovaGui:CreateWindow("My Awesome Hub")
-
-The CreateWindow function accepts one argument:
-
-title (string): The title of your window.
-
-
-
----
-
-Adding Tabs
-
-To organize your UI, you can add tabs:
-
-local Tab1 = Window:AddTab("Tab 1")
-local Tab2 = Window:AddTab("Tab 2")
-
-Each tab is returned as an object that allows you to add components like buttons, sliders, and text inputs.
+--[[
+Name = <string> - The name of the UI.
+HidePremium = <bool> - Whether or not the user details shows Premium status or not.
+SaveConfig = <bool> - Toggles the config saving in the UI.
+ConfigFolder = <string> - The name of the folder where the configs are saved.
+IntroEnabled = <bool> - Whether or not to show the intro animation.
+IntroText = <string> - Text to show in the intro animation.
+IntroIcon = <string> - URL to the image you want to use in the intro animation.
+Icon = <string> - URL to the image you want displayed on the window.
+CloseCallback = <function> - Function to execute when the window is closed.
+]]
 
 
 ---
 
-Adding Components
+Creating a Tab
 
-Buttons
+local Tab = Window:MakeTab({
+	Name = "Tab 1",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 
-Add a button to your tab with a custom callback function:
-
-Tab1:AddButton("My Button", function()
-    print("Button clicked!")
-end)
-
-Sliders
-
-Add a slider to your tab for user input:
-
-Tab1:AddSlider("Volume", 0, 100, 50, function(value)
-    print("Slider value: " .. value)
-end)
-
-The AddSlider function accepts the following arguments:
-
-name (string): The slider's label.
-
-min (number): The minimum value.
-
-max (number): The maximum value.
-
-default (number): The default value.
-
-callback (function): A function triggered whenever the slider value changes.
-
-
-Text Inputs
-
-Add a text input box for user text entry:
-
-Tab1:AddTextInput("Enter Text", "Default Text", function(input)
-    print("User input: " .. input)
-end)
-
-The AddTextInput function accepts the following arguments:
-
-name (string): The label for the text input.
-
-default (string): The default text.
-
-callback (function): A function triggered when the user submits text.
-
+--[[
+Name = <string> - The name of the tab.
+Icon = <string> - The icon of the tab.
+PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
+]]
 
 
 ---
 
-Window Controls
+Creating a Section
 
-Minimize Button: Shrinks the window to the title bar. Click again to restore it.
+local Section = Tab:AddSection({
+	Name = "Section"
+})
 
-Close Button: Destroys the UI completely.
-
-
-
----
-
-Full Example
-
-Here’s a full example of how to use NovaGui:
-
-local NovaGui = loadstring(game:HttpGet("https://raw.githubusercontent.com/Noorendra9778/NovaGui/main/NovaGui.lua"))()
-
--- Create the main window
-local Window = NovaGui:CreateWindow("My Hub")
-
--- Add tabs
-local Tab1 = Window:AddTab("Main Tab")
-local Tab2 = Window:AddTab("Settings")
-
--- Add components to Tab1
-Tab1:AddButton("Say Hello", function()
-    print("Hello, World!")
-end)
-
-Tab1:AddSlider("Volume", 0, 100, 50, function(value)
-    print("Volume set to " .. value)
-end)
-
-Tab1:AddTextInput("Username", "Enter your name here", function(input)
-    print("Your username is: " .. input)
-end)
-
--- Add components to Tab2
-Tab2:AddButton("Reset Settings", function()
-    print("Settings have been reset!")
-end)
+--[[
+Name = <string> - The name of the section.
+]]
 
 
 ---
 
-License
+Notifying the User
 
-NovaGui is free to use and modify in your Roblox projects. Attribution is appreciated but not required.
+NovaGui:MakeNotification({
+	Name = "Title!",
+	Content = "Notification content... what will it say??",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
 
+--[[
+Title = <string> - The title of the notification.
+Content = <string> - The content of the notification.
+Image = <string> - The icon of the notification.
+Time = <number> - The duration of the notification.
+]]
+
+
+---
+
+Creating a Button
+
+Tab:AddButton({
+	Name = "Button!",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+---
+
+Creating a Checkbox Toggle
+
+Tab:AddToggle({
+	Name = "This is a toggle!",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+	end    
+})
+
+--[[
+Name = <string> - The name of the toggle.
+Default = <bool> - The default value of the toggle.
+Callback = <function> - The function of the toggle.
+]]
+
+
+---
+
+Creating a Color Picker
+
+Tab:AddColorpicker({
+	Name = "Colorpicker",
+	Default = Color3.fromRGB(255, 0, 0),
+	Callback = function(Value)
+		print(Value)
+	end	  
+})
+
+--[[
+Name = <string> - The name of the colorpicker.
+Default = <color3> - The default value of the colorpicker.
+Callback = <function> - The function of the colorpicker.
+]]
+
+
+---
+
+Creating a Slider
+
+Tab:AddSlider({
+	Name = "Slider",
+	Min = 0,
+	Max = 20,
+	Default = 5,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "bananas",
+	Callback = function(Value)
+		print(Value)
+	end    
+})
+
+--[[
+Name = <string> - The name of the slider.
+Min = <number> - The minimal value of the slider.
+Max = <number> - The maximum value of the slider.
+Increment = <number> - How much the slider will change value when dragging.
+Default = <number> - The default value of the slider.
+ValueName = <string> - The text after the value number.
+Callback = <function> - The function of the slider.
+]]
+
+
+---
+
+Creating a Label
+
+Tab:AddLabel("Label")
+
+
+---
+
+Creating a Paragraph
+
+Tab:AddParagraph("Paragraph", "Paragraph Content")
+
+
+---
+
+Creating an Adaptive Input
+
+Tab:AddTextbox({
+	Name = "Textbox",
+	Default = "default box input",
+	TextDisappear = true,
+	Callback = function(Value)
+		print(Value)
+	end	  
+})
+
+--[[
+Name = <string> - The name of the textbox.
+Default = <string> - The default value of the textbox.
+TextDisappear = <bool> - Makes the text disappear in the textbox after losing focus.
+Callback = <function> - The function of the textbox.
+]]
+
+
+---
+
+Creating a Keybind
+
+Tab:AddBind({
+	Name = "Bind",
+	Default = Enum.KeyCode.E,
+	Hold = false,
+	Callback = function()
+		print("press")
+	end    
+})
+
+--[[
+Name = <string> - The name of the bind.
+Default = <keycode> - The default value of the bind.
+Hold = <bool> - Makes the bind work like: Holding the key > The bind returns true, Not holding the key > Bind returns false.
+Callback = <function> - The function of the bind.
+]]
+
+
+---
+
+Creating a Dropdown Menu
+
+Tab:AddDropdown({
+	Name = "Dropdown",
+	Default = "1",
+	Options = {"1", "2"},
+	Callback = function(Value)
+		print(Value)
+	end    
+})
+
+--[[
+Name = <string> - The name of the dropdown.
+Default = <string> - The default value of the dropdown.
+Options = <table> - The options in the dropdown.
+Callback = <function> - The function of the dropdown.
+]]
+
+
+---
+
+Finishing Your Script (Required)
+
+NovaGui:Init()
+
+
+---
+
+Destroying the Interface
+
+NovaGui:Destroy()
