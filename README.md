@@ -12,19 +12,33 @@ local NovaGui = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shle
 
 Creating a Window
 
-local Window = NovaGui:MakeWindow({Name = "Title of the library", HidePremium = false, SaveConfig = true, ConfigFolder = "NovaGuiTest"})
+local Window = NovaGui:MakeWindow({
+    Name = "Title of the library",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "NovaGuiTest"
+})
 
---[[
-Name = <string> - The name of the UI.
-HidePremium = <bool> - Whether or not the user details shows Premium status or not.
-SaveConfig = <bool> - Toggles the config saving in the UI.
-ConfigFolder = <string> - The name of the folder where the configs are saved.
-IntroEnabled = <bool> - Whether or not to show the intro animation.
-IntroText = <string> - Text to show in the intro animation.
-IntroIcon = <string> - URL to the image you want to use in the intro animation.
-Icon = <string> - URL to the image you want displayed on the window.
-CloseCallback = <function> - Function to execute when the window is closed.
-]]
+Options for Window:
+
+Name = <string>: The name of the UI.
+
+HidePremium = <bool>: Hides user premium status.
+
+SaveConfig = <bool>: Toggles saving the configuration.
+
+ConfigFolder = <string>: Name of the folder to save configurations.
+
+IntroEnabled = <bool>: Enables the intro animation.
+
+IntroText = <string>: Text shown in the intro animation.
+
+IntroIcon = <string>: URL for the intro animation image.
+
+Icon = <string>: URL for the main window icon.
+
+CloseCallback = <function>: Executes a function when the window is closed.
+
 
 
 ---
@@ -32,16 +46,19 @@ CloseCallback = <function> - Function to execute when the window is closed.
 Creating a Tab
 
 local Tab = Window:MakeTab({
-	Name = "Tab 1",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
+    Name = "Tab 1",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
 })
 
---[[
-Name = <string> - The name of the tab.
-Icon = <string> - The icon of the tab.
-PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
-]]
+Options for Tab:
+
+Name = <string>: The name of the tab.
+
+Icon = <string>: The icon of the tab.
+
+PremiumOnly = <bool>: Limits access to Premium users.
+
 
 
 ---
@@ -49,12 +66,13 @@ PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
 Creating a Section
 
 local Section = Tab:AddSection({
-	Name = "Section"
+    Name = "Section"
 })
 
---[[
-Name = <string> - The name of the section.
-]]
+Options for Section:
+
+Name = <string>: The name of the section.
+
 
 
 ---
@@ -62,18 +80,22 @@ Name = <string> - The name of the section.
 Notifying the User
 
 NovaGui:MakeNotification({
-	Name = "Title!",
-	Content = "Notification content... what will it say??",
-	Image = "rbxassetid://4483345998",
-	Time = 5
+    Name = "Notification Title!",
+    Content = "Notification content... what will it say?",
+    Image = "rbxassetid://4483345998",
+    Time = 5
 })
 
---[[
-Title = <string> - The title of the notification.
-Content = <string> - The content of the notification.
-Image = <string> - The icon of the notification.
-Time = <number> - The duration of the notification.
-]]
+Options for Notifications:
+
+Name = <string>: The title of the notification.
+
+Content = <string>: The notification content.
+
+Image = <string>: The icon for the notification.
+
+Time = <number>: Duration (in seconds) of the notification.
+
 
 
 ---
@@ -81,16 +103,18 @@ Time = <number> - The duration of the notification.
 Creating a Button
 
 Tab:AddButton({
-	Name = "Button!",
-	Callback = function()
-      		print("button pressed")
-  	end    
+    Name = "Button!",
+    Callback = function()
+        print("Button pressed")
+    end
 })
 
---[[
-Name = <string> - The name of the button.
-Callback = <function> - The function of the button.
-]]
+Options for Button:
+
+Name = <string>: The name of the button.
+
+Callback = <function>: The function that runs when the button is pressed.
+
 
 
 ---
@@ -98,18 +122,21 @@ Callback = <function> - The function of the button.
 Creating a Checkbox Toggle
 
 Tab:AddToggle({
-	Name = "This is a toggle!",
-	Default = false,
-	Callback = function(Value)
-		print(Value)
-	end    
+    Name = "Toggle!",
+    Default = false,
+    Callback = function(Value)
+        print(Value)
+    end
 })
 
---[[
-Name = <string> - The name of the toggle.
-Default = <bool> - The default value of the toggle.
-Callback = <function> - The function of the toggle.
-]]
+Options for Toggle:
+
+Name = <string>: The name of the toggle.
+
+Default = <bool>: Default toggle state (on or off).
+
+Callback = <function>: The function executed on toggle.
+
 
 
 ---
@@ -117,18 +144,21 @@ Callback = <function> - The function of the toggle.
 Creating a Color Picker
 
 Tab:AddColorpicker({
-	Name = "Colorpicker",
-	Default = Color3.fromRGB(255, 0, 0),
-	Callback = function(Value)
-		print(Value)
-	end	  
+    Name = "Colorpicker",
+    Default = Color3.fromRGB(255, 0, 0),
+    Callback = function(Value)
+        print(Value)
+    end
 })
 
---[[
-Name = <string> - The name of the colorpicker.
-Default = <color3> - The default value of the colorpicker.
-Callback = <function> - The function of the colorpicker.
-]]
+Options for Color Picker:
+
+Name = <string>: The name of the color picker.
+
+Default = <Color3>: Default color.
+
+Callback = <function>: Function executed on color selection.
+
 
 
 ---
@@ -136,27 +166,36 @@ Callback = <function> - The function of the colorpicker.
 Creating a Slider
 
 Tab:AddSlider({
-	Name = "Slider",
-	Min = 0,
-	Max = 20,
-	Default = 5,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "bananas",
-	Callback = function(Value)
-		print(Value)
-	end    
+    Name = "Slider",
+    Min = 0,
+    Max = 20,
+    Default = 5,
+    Color = Color3.fromRGB(255,255,255),
+    Increment = 1,
+    ValueName = "Value Name",
+    Callback = function(Value)
+        print(Value)
+    end
 })
 
---[[
-Name = <string> - The name of the slider.
-Min = <number> - The minimal value of the slider.
-Max = <number> - The maximum value of the slider.
-Increment = <number> - How much the slider will change value when dragging.
-Default = <number> - The default value of the slider.
-ValueName = <string> - The text after the value number.
-Callback = <function> - The function of the slider.
-]]
+Options for Slider:
+
+Name = <string>: The name of the slider.
+
+Min = <number>: Minimum value of the slider.
+
+Max = <number>: Maximum value of the slider.
+
+Default = <number>: Default value.
+
+Color = <Color3>: Slider color.
+
+Increment = <number>: Step size for slider increments.
+
+ValueName = <string>: Name to display beside the slider.
+
+Callback = <function>: Function executed when the slider value changes.
+
 
 
 ---
@@ -165,33 +204,45 @@ Creating a Label
 
 Tab:AddLabel("Label")
 
+Updating an Existing Label:
+
+Label:Set("New Label")
+
 
 ---
 
 Creating a Paragraph
 
-Tab:AddParagraph("Paragraph", "Paragraph Content")
+Tab:AddParagraph("Paragraph", "This is the content of the paragraph.")
+
+Updating an Existing Paragraph:
+
+Paragraph:Set("New Title", "Updated content for the paragraph.")
 
 
 ---
 
-Creating an Adaptive Input
+Creating an Input Box
 
 Tab:AddTextbox({
-	Name = "Textbox",
-	Default = "default box input",
-	TextDisappear = true,
-	Callback = function(Value)
-		print(Value)
-	end	  
+    Name = "Textbox",
+    Default = "Default text",
+    TextDisappear = true,
+    Callback = function(Value)
+        print(Value)
+    end
 })
 
---[[
-Name = <string> - The name of the textbox.
-Default = <string> - The default value of the textbox.
-TextDisappear = <bool> - Makes the text disappear in the textbox after losing focus.
-Callback = <function> - The function of the textbox.
-]]
+Options for Input Box:
+
+Name = <string>: The name of the input box.
+
+Default = <string>: Default text in the input box.
+
+TextDisappear = <bool>: Clears text after submission.
+
+Callback = <function>: Executes when text is submitted.
+
 
 
 ---
@@ -199,20 +250,24 @@ Callback = <function> - The function of the textbox.
 Creating a Keybind
 
 Tab:AddBind({
-	Name = "Bind",
-	Default = Enum.KeyCode.E,
-	Hold = false,
-	Callback = function()
-		print("press")
-	end    
+    Name = "Keybind",
+    Default = Enum.KeyCode.E,
+    Hold = false,
+    Callback = function()
+        print("Key pressed")
+    end
 })
 
---[[
-Name = <string> - The name of the bind.
-Default = <keycode> - The default value of the bind.
-Hold = <bool> - Makes the bind work like: Holding the key > The bind returns true, Not holding the key > Bind returns false.
-Callback = <function> - The function of the bind.
-]]
+Options for Keybind:
+
+Name = <string>: The name of the keybind.
+
+Default = <Enum.KeyCode>: Default keybind.
+
+Hold = <bool>: Enables hold-to-use functionality.
+
+Callback = <function>: Function executed on key press.
+
 
 
 ---
@@ -220,25 +275,29 @@ Callback = <function> - The function of the bind.
 Creating a Dropdown Menu
 
 Tab:AddDropdown({
-	Name = "Dropdown",
-	Default = "1",
-	Options = {"1", "2"},
-	Callback = function(Value)
-		print(Value)
-	end    
+    Name = "Dropdown",
+    Default = "Option 1",
+    Options = {"Option 1", "Option 2", "Option 3"},
+    Callback = function(Value)
+        print(Value)
+    end
 })
 
---[[
-Name = <string> - The name of the dropdown.
-Default = <string> - The default value of the dropdown.
-Options = <table> - The options in the dropdown.
-Callback = <function> - The function of the dropdown.
-]]
+Options for Dropdown:
+
+Name = <string>: The name of the dropdown.
+
+Default = <string>: Default selected option.
+
+Options = <table>: List of dropdown options.
+
+Callback = <function>: Function executed on option selection.
+
 
 
 ---
 
-Finishing Your Script (Required)
+Finishing the Script (Required)
 
 NovaGui:Init()
 
