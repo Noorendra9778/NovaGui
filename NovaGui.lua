@@ -98,34 +98,47 @@ task.spawn(function()
 end)
 
 local function AddDraggingFunctionality(DragPoint, Main)
-	pcall(function()
-		local Dragging, DragInput, MousePos, FramePos = false
-		DragPoint.InputBegan:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-				Dragging = true
-				MousePos = Input.Position
-				FramePos = Main.Position
+    local Dragging, DragInput, StartPos, StartFramePos
 
-				Input.Changed:Connect(function()
-					if Input.UserInputState == Enum.UserInputState.End then
-						Dragging = false
-					end
-				end)
-			end
-		end)
-		DragPoint.InputChanged:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseMovement then
-				DragInput = Input
-			end
-		end)
-		UserInputService.InputChanged:Connect(function(Input)
-			if Input == DragInput and Dragging then
-				local Delta = Input.Position - MousePos
-				TweenService:Create(Main, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position  = UDim2.new(FramePos.X.Scale,FramePos.X.Offset + Delta.X, FramePos.Y.Scale, FramePos.Y.Offset + Delta.Y)}):Play()
-			end
-		end)
-	end)
-end   
+    DragPoint.InputBegan:Connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+            Dragging = true
+            StartPos = Input.Position
+            StartFramePos = Main.Position
+
+            Input.Changed:Connect(function()
+                if Input.UserInputState == Enum.UserInputState.End then
+                    Dragging = false
+                end
+            end)
+        end
+    end)
+
+    DragPoint.InputChanged:Connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch then
+            DragInput = Input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(Input)
+        if Input == DragInput and Dragging then
+            local Delta = Input.Position - StartPos
+            local NewPosition = UDim2.new(
+                StartFramePos.X.Scale,
+                StartFramePos.X.Offset + Delta.X,
+                StartFramePos.Y.Scale,
+                StartFramePos.Y.Offset + Delta.Y
+            )
+
+            -- Smoothly move the frame to the new position
+            TweenService:Create(
+                Main,
+                TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out),
+                {Position = NewPosition}
+            ):Play()
+        end
+    end)
+		end
 
 local function Create(Name, Properties, Children)
 	local Object = Instance.new(Name)
