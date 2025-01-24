@@ -4,8 +4,8 @@ This documentation is for the stable release of NovaGui Library.
 ---
 
 ## Booting the Library
-lua
-local NovaGui = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+```lua
+local NovaGui = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()```
 
 
 ---
