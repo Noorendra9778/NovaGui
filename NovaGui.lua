@@ -1,4 +1,4 @@
--- NovaGui Library with Mobile-Friendly Adjustments
+-- NovaGui Library with Simplified Styling for Mobile
 local NovaGui = {}
 
 function NovaGui:CreateWindow(Title)
@@ -103,40 +103,6 @@ function NovaGui:CreateWindow(Title)
         MainUI:Destroy()
     end)
 
-    -- Draggable Frame
-    local UIS = game:GetService("UserInputService")
-    local dragging, dragInput, dragStart, startPos
-
-    local function update(input)
-        local delta = input.Position - dragStart
-        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
-
-    MainFrame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = MainFrame.Position
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    MainFrame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
-
-    UIS.InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            update(input)
-        end
-    end)
-
     local Library = {}
 
     function Library:AddTab(Name)
@@ -148,9 +114,9 @@ function NovaGui:CreateWindow(Title)
         TabButton.Position = UDim2.new(0.05, 0, (#TabContainer:GetChildren() - 1) * 30, 0)
         TabButton.Font = Enum.Font.GothamBold
         TabButton.Text = Name
-        TabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        TabButton.TextColor3 = Color3.fromRGB(255, 0, 0) -- Red text
+        TabButton.TextStrokeTransparency = 0 -- Black border for text
         TabButton.TextSize = 14
-        TabButton.TextXAlignment = Enum.TextXAlignment.Center
 
         local Tab = Instance.new("Frame")
         Tab.Name = Name
@@ -172,12 +138,13 @@ function NovaGui:CreateWindow(Title)
             local Button = Instance.new("TextButton")
             Button.Name = Text
             Button.Parent = Tab
-            Button.BackgroundColor3 = Color3.fromRGB(100, 0, 0)
+            Button.BackgroundColor3 = Color3.fromRGB(150, 150, 150) -- Grey background
             Button.Size = UDim2.new(0, 120, 0, 30)
             Button.Position = UDim2.new(0, 10, 0, (#Tab:GetChildren() - 1) * 35)
             Button.Font = Enum.Font.Gotham
             Button.Text = Text
-            Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+            Button.TextColor3 = Color3.fromRGB(255, 0, 0) -- Red text
+            Button.TextStrokeTransparency = 0 -- Black border
             Button.TextSize = 14
 
             Button.MouseButton1Click:Connect(Callback)
