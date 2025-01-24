@@ -67,7 +67,7 @@ Image = <string> - The icon of the notification.
 Time = <number> - The duration of the notification.
 ]]
 
-Creating a Button
+# Creating a Button
 
 Tab:AddButton({
 	Name = "Button!",
@@ -81,7 +81,7 @@ Name = <string> - The name of the button.
 Callback = <function> - The function of the button.
 ]]
 
-Creating a Checkbox toggle
+# Creating a Checkbox toggle
 
 Tab:AddToggle({
 	Name = "This is a toggle!",
@@ -97,11 +97,11 @@ Default = <bool> - The default value of the toggle.
 Callback = <function> - The function of the toggle.
 ]]
 
-Changing the value of an existing Toggle
+# Changing the value of an existing Toggle
 
 CoolToggle:Set(true)
 
-Creating a Color Picker
+# Creating a Color Picker
 
 Tab:AddColorpicker({
 	Name = "Colorpicker",
@@ -117,11 +117,11 @@ Default = <color3> - The default value of the colorpicker.
 Callback = <function> - The function of the colorpicker.
 ]]
 
-Setting the color picker's value
+# Setting the color picker's value
 
 ColorPicker:Set(Color3.fromRGB(255,255,255))
 
-Creating a Slider
+# Creating a Slider
 
 Tab:AddSlider({
 	Name = "Slider",
@@ -146,30 +146,30 @@ ValueName = <string> - The text after the value number.
 Callback = <function> - The function of the slider.
 ]]
 
-Change Slider Value
-
+# Change Slider Value
+```lua
 Slider:Set(2)
-
+```
 Make sure you make your slider a variable (local CoolSlider = Tab:AddSlider...) for this to work.
 
-Creating a Label
-
+# Creating a Label
+```lua
 Tab:AddLabel("Label")
-
-Changing the value of an existing label
-
+```
+# Changing the value of an existing label
+```lua
 CoolLabel:Set("Label New!")
-
-Creating a Paragraph
-
+```
+# Creating a Paragraph
+```lua
 Tab:AddParagraph("Paragraph","Paragraph Content")
-
-Changing an existing paragraph
-
+```
+# Changing an existing paragraph
+```lua
 CoolParagraph:Set("Paragraph New!", "New Paragraph Content!")
-
-Creating an Adaptive Input
-
+```
+# Creating an Adaptive Input
+```lua
 Tab:AddTextbox({
 	Name = "Textbox",
 	Default = "default box input",
@@ -178,7 +178,7 @@ Tab:AddTextbox({
 		print(Value)
 	end	  
 })
-
+```
 --[[
 Name = <string> - The name of the textbox.
 Default = <string> - The default value of the textbox.
@@ -186,8 +186,8 @@ TextDisappear = <bool> - Makes the text disappear in the textbox after losing fo
 Callback = <function> - The function of the textbox.
 ]]
 
-Creating a Keybind
-
+# Creating a Keybind
+```lua
 Tab:AddBind({
 	Name = "Bind",
 	Default = Enum.KeyCode.E,
@@ -196,7 +196,7 @@ Tab:AddBind({
 		print("press")
 	end    
 })
-
+```
 --[[
 Name = <string> - The name of the bind.
 Default = <keycode> - The default value of the bind.
@@ -204,12 +204,12 @@ Hold = <bool> - Makes the bind work like: Holding the key > The bind returns tru
 Callback = <function> - The function of the bind.
 ]]
 
-Changing the value of a bind
-
+# Changing the value of a bind
+```lua
 Bind:Set(Enum.KeyCode.E)
-
-Creating a Dropdown menu
-
+```
+# Creating a Dropdown menu
+```lua
 Tab:AddDropdown({
 	Name = "Dropdown",
 	Default = "1",
@@ -218,7 +218,7 @@ Tab:AddDropdown({
 		print(Value)
 	end    
 })
-
+```
 --[[
 Name = <string> - The name of the dropdown.
 Default = <string> - The default value of the dropdown.
@@ -226,26 +226,26 @@ Options = <table> - The options in the dropdown.
 Callback = <function> - The function of the dropdown.
 ]]
 
-Adding a set of new Dropdown buttons to an existing menu
-
+# Adding a set of new Dropdown buttons to an existing menu
+```lua
 Dropdown:Refresh(List<table>, true)
-
+```
 The above boolean value "true" is whether or not the current buttons will be deleted.
 
-Selecting a dropdown option
-
+# Selecting a dropdown option
+```lua
 Dropdown:Set("dropdown option")
-
-Finishing your script (REQUIRED)
+```
+# Finishing your script (REQUIRED)
 
 The below function needs to be added at the end of your code.
-
+```lua
 NovaGui:Init()
-
-How flags work.
+```
+# How flags work.
 
 The flags feature in the UI may be confusing for some people. It serves the purpose of being the ID of an element in the config file, and makes accessing the value of an element anywhere in the code possible. Below is an example of using flags.
-
+```lua
 Tab1:AddToggle({
     Name = "Toggle",
     Default = true,
@@ -254,17 +254,18 @@ Tab1:AddToggle({
 })
 
 print(NovaGui.Flags["toggle"].Value) -- prints the value of the toggle.
-
+```
 Flags only work with the toggle, slider, dropdown, bind, and colorpicker.
 
 Making your interface work with configs.
 
 To make your interface use the configs function, you first need to add the SaveConfig and ConfigFolder arguments to your window function. The explanation of these arguments is above. Then, you need to add the Flag and Save values to every toggle, slider, dropdown, bind, and colorpicker you want to include in the config file. The Flag = <string> argument is the ID of an element in the config file. The Save = <bool> argument includes the element in the config file. Config files are made for every game the library is launched in.
 
-Destroying the Interface
+# Destroying the Interface
 
+```lua
 NovaGui:Destroy()
-
+```
 
 ---
 
