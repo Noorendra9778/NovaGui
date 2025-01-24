@@ -8,8 +8,9 @@ This documentation is for the stable release of NovaGui Library.
 
 Booting the Library
 
+```lua
 local NovaGui = loadstring(game:HttpGet(('https://raw.githubusercontent.com/Noorendra9778/NovaGui/main/NovaGui.lua')))()
-
+```
 Creating a Window
 
 local Window = NovaGui:MakeWindow({Name = "Title of the library", HidePremium = false, SaveConfig = true, ConfigFolder = "NovaGuiTest"})
