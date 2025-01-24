@@ -12,9 +12,9 @@ This documentation is for the stable release of NovaGui Library.
 local NovaGui = loadstring(game:HttpGet(('https://raw.githubusercontent.com/Noorendra9778/NovaGui/main/NovaGui.lua')))()
 ```
 # Creating a Window
-
+```lua
 local Window = NovaGui:MakeWindow({Name = "Title of the library", HidePremium = false, SaveConfig = true, ConfigFolder = "NovaGuiTest"})
-
+```
 --[[
 Name = <string> - The name of the UI.
 HidePremium = <bool> - Whether or not the user details shows Premium status or not.
@@ -28,13 +28,13 @@ CloseCallback = <function> - Function to execute when the window is closed.
 ]]
 
 # Creating a Tab
-
+```lua
 local Tab = Window:MakeTab({
 	Name = "Tab 1",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
-
+```
 --[[
 Name = <string> - The name of the tab.
 Icon = <string> - The icon of the tab.
@@ -42,24 +42,24 @@ PremiumOnly = <bool> - Makes the tab accessible to NovaGui Premium users only.
 ]]
 
 # Creating a Section
-
+```lua
 local Section = Tab:AddSection({
 	Name = "Section"
 })
-
+```
 --[[
 Name = <string> - The name of the section.
 ]]
 
 # Notifying the user
-
+```lua
 NovaGui:MakeNotification({
 	Name = "Title!",
 	Content = "Notification content... what will it say??",
 	Image = "rbxassetid://4483345998",
 	Time = 5
 })
-
+```
 --[[
 Title = <string> - The title of the notification.
 Content = <string> - The content of the notification.
@@ -68,21 +68,21 @@ Time = <number> - The duration of the notification.
 ]]
 
 # Creating a Button
-
+```lua
 Tab:AddButton({
 	Name = "Button!",
 	Callback = function()
       		print("button pressed")
   	end    
 })
-
+```
 --[[
 Name = <string> - The name of the button.
 Callback = <function> - The function of the button.
 ]]
 
 # Creating a Checkbox toggle
-
+```lua
 Tab:AddToggle({
 	Name = "This is a toggle!",
 	Default = false,
@@ -90,7 +90,7 @@ Tab:AddToggle({
 		print(Value)
 	end    
 })
-
+```
 --[[
 Name = <string> - The name of the toggle.
 Default = <bool> - The default value of the toggle.
@@ -98,11 +98,11 @@ Callback = <function> - The function of the toggle.
 ]]
 
 # Changing the value of an existing Toggle
-
+```lua
 CoolToggle:Set(true)
-
+```
 # Creating a Color Picker
-
+```lua
 Tab:AddColorpicker({
 	Name = "Colorpicker",
 	Default = Color3.fromRGB(255, 0, 0),
@@ -110,7 +110,7 @@ Tab:AddColorpicker({
 		print(Value)
 	end	  
 })
-
+```
 --[[
 Name = <string> - The name of the colorpicker.
 Default = <color3> - The default value of the colorpicker.
@@ -118,11 +118,11 @@ Callback = <function> - The function of the colorpicker.
 ]]
 
 # Setting the color picker's value
-
+```lua
 ColorPicker:Set(Color3.fromRGB(255,255,255))
-
+```
 # Creating a Slider
-
+```lua
 Tab:AddSlider({
 	Name = "Slider",
 	Min = 0,
@@ -135,7 +135,7 @@ Tab:AddSlider({
 		print(Value)
 	end    
 })
-
+```
 --[[
 Name = <string> - The name of the slider.
 Min = <number> - The minimal value of the slider.
